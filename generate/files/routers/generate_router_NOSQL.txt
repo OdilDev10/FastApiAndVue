@@ -1,0 +1,45 @@
+from fastapi import APIRouter, Query
+from fastapi import status, Response
+from {module_name}.controller import all_{module_name}, create_{module_name}, destroy_{module_name}, find_one_{module_name}, update_{module_name}
+from {module_name}.models import {module_name}_Model
+
+router_{module_name} = APIRouter()
+
+@router_{module_name}.get("/{module_name}", response_model=list[{module_name}_Model], tags=["{module_name}".upper()])
+def get_{module_name}(
+    current_page: int = Query(1, description="Número de página", ge=1),
+    page_size: int = Query(10, description="Resultados por página", le=1000),
+    search_term: str = Query("", description="Término de búsqueda"),
+):
+    try:
+        return all_{module_name}(current_page, page_size, search_term)
+    except Exception as error:
+        return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@router_{module_name}.post("/{module_name}", response_model={module_name}_Model, tags=["{module_name}".upper()])
+def post_{module_name}({module_name}: {module_name}_Model):
+    try:
+        return create_{module_name}({module_name})
+    except Exception as error:
+        return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@router_{module_name}.get("/{module_name}/{id}", response_model={module_name}_Model, tags=["{module_name}".upper()])
+def get_{module_name}(id: str):
+    try:
+        return find_one_{module_name}(id)
+    except Exception as error:
+        return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@router_{module_name}.put("/{module_name}/{id}", response_model={module_name}_Model, tags=["{module_name}".upper()])
+def put_{module_name}(id: str, {module_name}: {module_name}_Model):
+    try:
+        update_{module_name}(id, {module_name})
+    except Exception as error:
+        return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@router_{module_name}.delete("/{module_name}/{id}", response_model={module_name}_Model, tags=["{module_name}".upper()])
+def delete_{module_name}(id: str):
+    try:
+        destroy_{module_name}(id)
+    except Exception as error:
+        return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)

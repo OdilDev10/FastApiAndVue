@@ -1,0 +1,22 @@
+from fastapi import FastAPI
+# from you_module.router import router_module
+from db.db_config_sql import connection
+
+app = FastAPI()
+
+async def startup():
+    print('DB Connected')
+    connection.connect()
+
+app.add_event_handler("startup", startup)
+
+@app.get("/")
+def read_root():
+    return {"message": "Welcome app run on port 8000"}
+
+# Routes
+# app.include_router(prefix='/api', router=router_module)
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)

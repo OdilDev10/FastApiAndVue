@@ -1,0 +1,7 @@
+app = FastAPI()
+
+async def startup():
+    print('DB Connected')
+    connection.connect()
+
+app.add_event_handler("startup", startup)

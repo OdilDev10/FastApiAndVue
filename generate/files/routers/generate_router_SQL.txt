@@ -1,0 +1,41 @@
+from fastapi import APIRouter
+from fastapi import status, Response
+from {module_name}.controller import all_{module_name}, create_{module_name}, find_one_{module_name}, update_{module_name}, destroy_{module_name}
+from {module_name}.schemas import Schema_{module_name}
+
+router_{module_name} = APIRouter()
+
+@router_{module_name}.get("/{module_name}", response_model=list[Schema_{module_name}], tags=['{module_name}'.upper()])
+async def get_{module_name}():
+    try:
+        return await all_{module_name}()
+    except Exception as error:
+        return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=error)
+    
+@router_{module_name}.post('/{module_name}', response_model=Schema_{module_name}, tags=['{module_name}'.upper()])
+async def post_{module_name}(carro: Schema_{module_name}):
+    try:
+        return await create_{module_name}(carro)
+    except Exception as error:
+        return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=error)
+    
+@router_{module_name}.get('/{module_name}/{id}', response_model=Schema_{module_name}, tags=['{module_name}'.upper()])
+async def get_one_{module_name}(id: str | int):
+    try:
+        return await find_one_{module_name}(id)
+    except Exception as error:
+        return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=error)    
+
+@router_{module_name}.put('/{module_name}/{id}', response_model=Schema_{module_name}, tags=['{module_name}'.upper()])
+async def put_{module_name}(id: str | int, carro: Schema_{module_name}):
+    try:
+        return await update_{module_name}(id, carro)
+    except Exception as error:
+        return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=error)    
+
+@router_{module_name}.delete('/{module_name}/{id}', status_code=status.HTTP_204_NO_CONTENT, tags=['{module_name}'.upper()])
+async def delete_{module_name}(id: str | int):
+    try:
+        return await destroy_{module_name}(id)
+    except Exception as error:
+        return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=error)    

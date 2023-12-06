@@ -1,0 +1,11 @@
+
+def SchemaEntity{module_name}(item) -> dict:
+    return {
+        "id": str(item["_id"]),
+        "name": item["name"],
+        "email": item["email"],
+        "password": item["password"],
+    }
+    
+def SchemaEntity{module_name}s(entity) -> list:
+    return [SchemaEntity{module_name}(item) for item in entity]

@@ -1,0 +1,43 @@
+from db.db_config_nosql import connection
+from {module_name}.schemas import SchemaEntity{module_name}, SchemaEntity{module_name}
+from fastapi import status, Response
+from passlib.hash import sha256_crypt
+from bson import ObjectId
+import re
+
+def all_{module_name}(current_page, page_size, search_term):
+    start = (current_page - 1) * page_size
+    end = current_page * page_size
+    query = {}
+
+    if search_term:
+        query["name"] = {"$regex": re.escape(search_term), "$options": "i"}
+
+    {module_name} = list(connection.local.{module_name}.find(query).skip(start).limit(page_size))
+    return SchemaEntity{module_name}({module_name})
+
+def find_one_{module_name}(id: int):
+    {module_name} = connection.local.{module_name}.find_one({"_id": ObjectId(id)})
+    return SchemaEntity{module_name}({module_name})
+
+def create_{module_name}({module_name}):
+    new_{module_name} = dict({module_name})
+    del new_{module_name}["id"]
+    new_{module_name}["password"] = sha256_crypt.encrypt(new_{module_name}["password"])
+    id = connection.local.{module_name}.insert_one(new_{module_name}).inserted_id
+    created_{module_name} = connection.local.{module_name}.find_one({"_id": id})
+    return SchemaEntity{module_name}(created_{module_name})
+
+def update_{module_name}(id: int, {module_name}):
+    new_{module_name} = dict({module_name})
+    new_{module_name}["password"] = sha256_crypt.encrypt(new_{module_name}["password"])
+    connection.local.{module_name}.find_one_and_update({"_id": ObjectId(id)}, {"$set": new_{module_name}})
+
+    return SchemaEntity{module_name}(connection.local.{module_name}.find_one({"_id": ObjectId(id)}))
+
+def destroy_{module_name}(id: int):
+    connection.local.{module_name}.find_one_and_delete({"_id": ObjectId(id)})
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+

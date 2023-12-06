@@ -1,0 +1,8 @@
+from pydantic import BaseModel
+from typing import Union
+
+class {module_name}_Model(BaseModel):
+    id: Union[str, int, None] = None
+    name: str
+    email: str
+    password: str

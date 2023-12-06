@@ -1,0 +1,4 @@
+# Routes
+# app.include_router(prefix='/api', router=router_module)
+
+if __name__ == "__main__":

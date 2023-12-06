@@ -1,0 +1,9 @@
+from pydantic import BaseModel
+from typing import Optional, Union
+
+class Schema_{module_name}(BaseModel):
+    id: Union[str, int, None] = None
+    name: str
+    description: str
+    
+    

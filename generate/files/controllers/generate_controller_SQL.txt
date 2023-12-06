@@ -1,0 +1,26 @@
+from fastapi import status, Response
+from {module_name}.models import Model_{module_name}
+from db.db_config_sql import database
+from {module_name}.schemas import Schema_{module_name}
+
+async def all_{module_name}():
+    return await database.fetch_all(Model_{module_name}.select())   
+    
+async def create_{module_name}(element: Schema_{module_name}):
+    new_element = {"name": element.name, "description": element.description} 
+    operation = await database.execute(Model_{module_name}.insert().values(new_element))        
+    return await database.fetch_one(Model_{module_name}.select().where(Model_{module_name}.c.id == operation))
+
+async def find_one_{module_name}(id: str | int):
+    return await database.fetch_one(Model_{module_name}.select().where(Model_{module_name}.c.id == id))
+    
+async def update_{module_name}(id: str | int, element: Schema_{module_name}):
+    await database.fetch_one(Model_{module_name}.update()
+                             .values(name=element.name, description=element.description)
+                             .where(Model_{module_name}.c.id == id))
+    return await database.fetch_one(Model_{module_name}.select().where(Model_{module_name}.c.id == id))
+    
+async def destroy_{module_name}(id: str | int):
+    await database.fetch_one(Model_{module_name}.delete().where(Model_{module_name}.c.id == id))
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+

@@ -1,0 +1,11 @@
+from sqlalchemy import Table, Column, Integer, String
+from db.db_config_sql import engine, meta
+
+Model_{module_name} = Table('{module_name}', meta, 
+    Column('id', Integer, primary_key=True), 
+    Column('name', String(255)),
+    Column('description', String(255)),
+)
+
+meta.create_all(engine)
+
