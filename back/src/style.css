@@ -13,3 +13,25 @@ ul {
   text-decoration: none;
   list-style: none;
 }
+
+.section_inicio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  border-radius: 50px;
+  background: linear-gradient(145deg, #ecffff, #c7d8e6);
+}
+
+
+.container {
+  width: 65%;
+  border-radius: 50px;
+  background: linear-gradient(145deg, #ecffff, #c7d8e6);
+  box-shadow: 20px 20px 60px #bcccd9, -20px -20px 60px #feffff;
+  text-align: center;
+  padding: 60px;
+  display: flex;
+
+}
+
