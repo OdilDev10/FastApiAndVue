@@ -1,14 +1,17 @@
 <template>
-  <section>
+  <section class="section_inicio">
     <div class="container">
-      <h1>LISTA APP</h1>
 
-      <div>
-        <img :src="notesPresentation" alt="Presentation" />
-
-        <Button buttonText="Iniciar sesión" />
-        <Button buttonText="Registrarse" />
+      <div class="buttons-container">
+        <Button buttonText="Iniciar sesión" :to="{ name: 'login_page' }" />
+        <Button buttonText="Registrarse" :to="{ name: 'register_page' }" />
       </div>
+
+      <div class="container-image">
+        <h1>LISTA APP</h1>
+        <img :src="notesPresentation" alt="Presentation" />
+      </div>
+
     </div>
   </section>
 </template>
@@ -18,6 +21,9 @@ import notesPresentation from "../assets/notes_presentation.svg";
 import Button from "../components/Button.vue";
 
 export default {
+  components: {
+    Button
+  },
   data() {
     return {
       notesPresentation: notesPresentation,
@@ -26,31 +32,27 @@ export default {
 };
 </script>
 
+
 <style lang="css" scoped>
-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  border-radius: 50px;
-  background: linear-gradient(145deg, #ecffff, #c7d8e6);
+.container-image {
+  width: 80%;
 }
 
-.container {
-  width: 65%;
-  border-radius: 50px;
-  background: linear-gradient(145deg, #ecffff, #c7d8e6);
-  box-shadow: 20px 20px 60px #bcccd9, -20px -20px 60px #feffff;
-  text-align: center;
-  padding: 60px;
-}
 
 h1 {
   margin-bottom: 10px;
 }
 
 img {
-  height: 50%;
-  width: 50%;
+  height: 80%;
+  width: 80%;
+}
+
+
+.buttons-container {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 20%;
 }
 </style>
