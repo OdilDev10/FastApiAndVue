@@ -1,5 +1,5 @@
 <template>
-  <button :disabled="disabled" @click="navigate">{{ buttonText }}</button>
+  <button :disabled="disabled" @click="navigate" :style="style">{{ buttonText }}</button>
 </template>
 
 <script>
@@ -9,7 +9,7 @@ export default {
   props: {
     buttonText: {
       type: String,
-      default: "Login",
+      default: "buttonText",
     },
     disabled: {
       type: Boolean,
@@ -18,6 +18,10 @@ export default {
     to: {
       type: [String, Object],
       default: null,
+    },
+    style: {
+      type: String,
+      default: '',
     },
   },
   setup(props) {

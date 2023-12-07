@@ -1,47 +1,58 @@
 <template lang="">
-   <section class="section_inicio">
-    <div class="container">
-        
-    <div class="buttons_container">
-        Login
-    </div>
+  <section class="section_inicio">
+    <div class="container" style="flex-direction: column">
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          gap: 13px;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <Title title="Login" />
+        <img :src="authenticationImg" alt="Authorization" />
+        <Input style="width: 50%" name="email" type="email" required />
 
-      <div class="container_inputs">
-        <h1>LISTA APP</h1>
-        <Input/>
+        <Input style="width: 50%" name="password" type="password" required />
+
+        <div style="display: flex; justify-content: center; gap: 7px">
+          <Button
+          buttonText="Login"
+            style="background: var(--color-primario)"
+            :to="{ name: 'list_page' }"
+          />
+          <Button
+            buttonText="Register"
+            style="background: var(--color-suave)"
+            :to="{ name: 'register_page' }"
+          />
+        </div>
       </div>
-
     </div>
-   </section>
+  </section>
 </template>
-
 <script>
-import Input from '../components/Input.vue'
+import Button from "../components/Button.vue";
+import Input from "../components/Input.vue";
+import Title from "../components/Title.vue";
+import authenticationImg from "../assets/authentication.svg";
 
 export default {
-    components: {
-        Input
-    },
-    //   data() {
-    //     return {
-    //       notesPresentation: notesPresentation,
-    //     };
-    //   },
-}
+  components: {
+    Button,
+    Input,
+    Title,
+  },
+  data() {
+    return {
+      authenticationImg: authenticationImg,
+    };
+  },
+};
 </script>
-
-
-<style lang="">
-.container_inputs {
-  width: 70%;
+<style lang="css">
+img {
+  height: 200px;
 }
-
-
-.buttons_container {
-  gap: 10px;
-  display: flex;
-  flex-direction: column;
-  width: 20%;
-}
-
 </style>
