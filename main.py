@@ -1,6 +1,11 @@
 from fastapi import FastAPI
-from tasks.router import router_tasks
-from config import connection
+
+# ROUTER
+
+from enfermedades.router import router_enfermedades
+from pets.router import router_pets
+
+
 
 app = FastAPI(
     title="Mi API",
@@ -13,14 +18,10 @@ app = FastAPI(
 )
 
 
-async def startup():
-    print("DB Connected")
-    connection.connect()
+app.include_router(prefix="/api", router=router_enfermedades)
+app.include_router(prefix="/api", router=router_pets)
 
 
-app.add_event_handler("startup", startup)
-
-app.include_router(prefix="/api", router=router_tasks)
 
 
 @app.get("/")

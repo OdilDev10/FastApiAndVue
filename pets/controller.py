@@ -1,10 +1,10 @@
 from sqlalchemy import select, or_
-from .models import Model_{module_name}
+from .models import Model_pets
 from config import connection
 from fastapi import status
 
 
-async def all_{module_name}(
+async def all_pets(
     page="",
     limit="",
     search_term="",
@@ -12,10 +12,10 @@ async def all_{module_name}(
     try:
         if search_term:
             query = connection.execute(
-                Model_{module_name}.select()
+                Model_pets.select()
                 .where(
                     or_(
-                        Model_{module_name}.c.email.ilike(f"%{search_term}%"),
+                        Model_pets.c.name.ilike(f"%{search_term}%"),
                     )
                 )
                 .offset((page - 1) * limit)
@@ -23,7 +23,7 @@ async def all_{module_name}(
             )
         else:
             query = connection.execute(
-                Model_{module_name}.select().offset((page - 1) * limit).limit(limit)
+                Model_pets.select().offset((page - 1) * limit).limit(limit)
             )
 
         return {
@@ -41,11 +41,14 @@ async def all_{module_name}(
         }
 
 
-async def create_{module_name}(element):
+async def create_pets(element):
     try:
         query = connection.execute(
-            Model_{module_name}.insert().values(email=element.email, password=element.password)
+            Model_pets.insert().values(
+                name=element.name, age=element.age, owner=element.owner
+            )
         )
+
         return {
             "message": "create successfully",
             "status_code": status.HTTP_200_OK,
@@ -58,9 +61,11 @@ async def create_{module_name}(element):
         }
 
 
-async def find_one_{module_name}(id: str | int):
+async def find_one_pets(id: str | int):
     try:
-        query = connection.execute(Model_{module_name}.select().where(Model_{module_name}.c.id == id)).fetchall()
+        query = connection.execute(
+            Model_pets.select().where(Model_pets.c.id == id)
+        ).fetchall()
         return query
     except Exception as error:
         print("-----Error controller: ", error)
@@ -70,18 +75,18 @@ async def find_one_{module_name}(id: str | int):
         }
 
 
-async def update_{module_name}(id: str | int, element):
+async def update_pets(id: str | int, element):
     try:
         connection.execute(
-            Model_{module_name}.update()
-            .values(email=element.email, password=element.password)
-            .where(Model_{module_name}.c.id == id)
+            Model_pets.update()
+            .values(name=element.name, age=element.age, owner=element.owner)
+            .where(Model_pets.c.id == id)
         )
         return {
-            "{module_name}": connection.execute(
-                Model_{module_name}.select().where(Model_{module_name}.c.id == id)
+            "pets": connection.execute(
+                Model_pets.select().where(Model_pets.c.id == id)
             ).fetchall(),
-            "message": "updated {module_name}",
+            "message": "updated pets",
         }
     except Exception as error:
         print("-----Error controller: ", error)
@@ -91,9 +96,9 @@ async def update_{module_name}(id: str | int, element):
         }
 
 
-async def destroy_{module_name}(id: str | int):
+async def destroy_pets(id: str | int):
     try:
-        connection.execute(Model_{module_name}.delete().where(Model_{module_name}.c.id == id))
+        connection.execute(Model_pets.delete().where(Model_pets.c.id == id))
 
         return {
             "status_code": status.HTTP_204_NO_CONTENT,

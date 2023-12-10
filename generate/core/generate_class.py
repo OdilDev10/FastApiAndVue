@@ -17,29 +17,29 @@ class Generate:
                 self.generate_create_init_file('db')
 
             if data_base_type == "Pymongo" and not os.path.exists(
-                "db/db_config_nosql.py"
+                "config_nosql.py"
             ):
                 self.generate_create_files(
-                    "db",
-                    "db_config_nosql.py",
+                    "",
+                    "config_nosql.py",
                     "w",
                     "generate/files/db/generate_db_config_NOSQL.txt",
                 )
 
             elif data_base_type == "SQLAlchemy" and not os.path.exists(
-                "db/db_config_sql.py"
+                "config.py"
             ):
                 self.generate_create_files(
-                    "db",
-                    "db_config_sql.py",
+                    "",
+                    "config.py",
                     "w",
                     "generate/files/db/generate_db_config_SQL.txt",
                 )
 
-                with open("generate/files/main/generate_main_SQL.txt", "r") as file:
-                    contenido_modificado = file.read()
-                with open("main.py", "w") as file:
-                    file.write(contenido_modificado)
+                # with open("generate/files/main/generate_main_SQL.txt", "r") as file:
+                #     contenido_modificado = file.read()
+                # with open("main.py", "w") as file:
+                #     file.write(contenido_modificado)
 
             else:
                 print(f"✓----Database config {data_base_type} exists")

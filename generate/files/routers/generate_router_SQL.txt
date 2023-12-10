@@ -1,41 +1,60 @@
-from fastapi import APIRouter
-from fastapi import status, Response
-from {module_name}.controller import all_{module_name}, create_{module_name}, find_one_{module_name}, update_{module_name}, destroy_{module_name}
-from {module_name}.schemas import Schema_{module_name}
+from fastapi import APIRouter, status
+from .controller import all_{module_name}, create_{module_name}, find_one_{module_name}, update_{module_name}, destroy_{module_name}
+from .schemas import Schema_{module_name}_create_or_update
 
 router_{module_name} = APIRouter()
 
-@router_{module_name}.get("/{module_name}", response_model=list[Schema_{module_name}], tags=['{module_name}'.upper()])
-async def get_{module_name}():
+
+@router_{module_name}.get("/{module_name}", tags=["{module_name}".upper()])
+async def get_{module_name}(page: int = 1, limit: int = 10, search_term: str = ""):
     try:
-        return await all_{module_name}()
+        return await all_{module_name}(page=page, limit=limit, search_term=search_term)
     except Exception as error:
-        return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=error)
-    
-@router_{module_name}.post('/{module_name}', response_model=Schema_{module_name}, tags=['{module_name}'.upper()])
-async def post_{module_name}(carro: Schema_{module_name}):
+        return {
+            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
+            "detail": str(error),
+        }
+
+
+@router_{module_name}.post("/{module_name}", tags=["{module_name}".upper()])
+async def post_{module_name}(elemet: Schema_{module_name}_create_or_update):
     try:
-        return await create_{module_name}(carro)
+        return await create_{module_name}(elemet)
     except Exception as error:
-        return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=error)
-    
-@router_{module_name}.get('/{module_name}/{id}', response_model=Schema_{module_name}, tags=['{module_name}'.upper()])
-async def get_one_{module_name}(id: str | int):
+        return {
+            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
+            "detail": str(error),
+        }
+
+
+@router_{module_name}.get("/{module_name}/{id}", tags=["{module_name}".upper()])
+async def get_one_{module_name}(id):
     try:
         return await find_one_{module_name}(id)
     except Exception as error:
-        return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=error)    
+        return {
+            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
+            "detail": str(error),
+        }
 
-@router_{module_name}.put('/{module_name}/{id}', response_model=Schema_{module_name}, tags=['{module_name}'.upper()])
-async def put_{module_name}(id: str | int, carro: Schema_{module_name}):
+
+@router_{module_name}.put("/{module_name}/{id}", tags=["{module_name}".upper()])
+async def post_{module_name}(id, elemet: Schema_{module_name}_create_or_update):
     try:
-        return await update_{module_name}(id, carro)
+        return await update_{module_name}(id, elemet)
     except Exception as error:
-        return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=error)    
+        return {
+            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
+            "detail": str(error),
+        }
 
-@router_{module_name}.delete('/{module_name}/{id}', status_code=status.HTTP_204_NO_CONTENT, tags=['{module_name}'.upper()])
-async def delete_{module_name}(id: str | int):
+
+@router_{module_name}.delete("/{module_name}/{id}", tags=["{module_name}".upper()])
+async def post_{module_name}(id):
     try:
         return await destroy_{module_name}(id)
     except Exception as error:
-        return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=error)    
+        return {
+            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
+            "detail": str(error),
+        }

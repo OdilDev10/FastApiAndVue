@@ -5,20 +5,22 @@
         style="
           display: flex;
           flex-direction: column;
-          gap: 13px;
+          gap: 20px;
           justify-content: center;
           align-items: center;
+          width: 50%;
+          margin: auto;
         "
       >
         <Title title="Login" />
         <img :src="authenticationImg" alt="Authorization" />
-        <Input style="width: 50%" name="email" type="email" required />
+        <Input style="width: 100%" name="email" type="email" required />
 
-        <Input style="width: 50%" name="password" type="password" required />
+        <Input style="width: 100%" name="password" type="password" required />
 
         <div style="display: flex; justify-content: center; gap: 7px">
           <Button
-          buttonText="Login"
+            buttonText="Login"
             style="background: var(--color-primario)"
             :to="{ name: 'list_page' }"
           />

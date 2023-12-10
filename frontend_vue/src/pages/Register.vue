@@ -5,16 +5,18 @@
         style="
           display: flex;
           flex-direction: column;
-          gap: 13px;
+          gap: 20px;
           justify-content: center;
           align-items: center;
+          width: 50%;
+          margin: auto;
         "
       >
         <Title title="Register" />
         <img :src="authenticationImg" alt="Authorization" />
-        <Input style="width: 50%" name="email" type="email" required />
-        <Input style="width: 50%" name="username" type="text" required />
-        <Input style="width: 50%" name="password" type="password" required />
+        <Input style="width: 100%" name="email" type="email" required />
+        <Input style="width: 100%" name="username" type="text" required />
+        <Input style="width: 100%" name="password" type="password" required />
 
         <div style="display: flex; justify-content: center; gap: 7px">
           <Button
